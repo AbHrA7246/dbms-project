@@ -1,34 +1,28 @@
 # EcoCycle — E-Waste Management & Recycling Optimization System
 
-A web-based e-waste management platform designed to help individuals and organizations register unwanted electronics, find collection facilities, submit collection requests, and track the recycling process.
+EcoCycle is a web-based e-waste management platform developed as a college project. It provides an interface for registering unwanted electronic devices, exploring collection facilities, submitting collection requests, and tracking recycling progress.
 
-EcoCycle is an academic project developed to explore how digital platforms can support responsible electronic-waste management and more efficient recycling workflows.
-
-## Overview
-
-Electronic waste is growing rapidly as electronic devices are replaced more frequently. EcoCycle proposes a centralized platform for managing e-waste collection and recycling activities.
-
-The project is being developed in phases. The current version provides a React-based web interface with browser-local data persistence. Backend services and Oracle Database integration are planned for a future phase.
+The project aims to explore how digital platforms can support responsible e-waste disposal and more efficient recycling workflows.
 
 ## Features
 
 ### Public pages
-- **Home:** Introduction to EcoCycle and responsible e-waste management.
-- **How It Works:** Overview of the proposed recycling workflow.
+- **Home:** Project introduction and responsible recycling overview.
+- **How It Works:** Explanation of the proposed recycling workflow.
 - **About:** Project mission and objectives.
-- **Accepted Waste:** Information about accepted e-waste categories.
-- **FAQ:** Answers to common questions.
-- **Contact:** Contact information page.
+- **Accepted Waste:** Information about accepted electronic waste categories.
+- **FAQ:** Frequently asked questions.
+- **Contact:** Contact information.
 
-### Application features
-- **Sign up and sign in:** Demonstration authentication implemented on the client side.
+### Application pages
+- **Sign Up / Sign In:** Client-side demonstration authentication.
 - **Dashboard:** Overview of registered items and collection requests.
 - **E-Waste Registration:** Form for entering electronic-item details and collection preferences.
 - **Collection Centres:** Directory of example collection facilities.
-- **Request Tracking:** View requests and their displayed recycling progress.
-- **Account Settings:** Manage account information and clear locally saved records.
+- **Request Tracking:** View submitted requests and their displayed progress.
+- **Account Settings:** Manage account information and clear locally saved data.
 
-> **Current implementation status:** Authentication and request management are frontend prototypes. Collection progress is demonstrated through the interface; it is not connected to a real recycling operation or backend service.
+> **Current status:** EcoCycle is a frontend prototype. Authentication and request management are not connected to a production backend or a real recycling network.
 
 ## Technology Stack
 
@@ -40,10 +34,10 @@ The project is being developed in phases. The current version provides a React-b
 | Tailwind CSS 3 | Styling and responsive layouts |
 | Lucide React | Icons |
 | PostCSS and Autoprefixer | CSS processing |
-| Browser localStorage | Local persistence for the current phase |
-| Node.js and npm | Development environment and dependency management |
+| Browser `localStorage` | Local data persistence |
+| Node.js and npm | Development environment |
 
-**Planned technologies:** Node.js/Express for backend services and Oracle Database for persistent application data. These are not yet implemented.
+**Planned:** Node.js/Express backend services and Oracle Database integration. Neither is implemented in the current version.
 
 ## Project Structure
 
@@ -70,17 +64,15 @@ dbms-project/
             └── storageService.js
 ```
 
-The `frontend/src` directory contains the React application, page components, shared UI components, authentication context, and local storage service.
-
 ## Prerequisites
 
-Install the following software on your computer:
+Install the following on your computer:
 
-- **Git** — to clone the repository.
-- **Node.js 20 LTS recommended** — Node.js 18 or later is the documented minimum.
+- **Git** — to download the repository.
+- **Node.js 20 LTS recommended** — Node.js 18 or later.
 - **npm** — included with Node.js.
 
-Verify your installation:
+Verify the installations:
 
 ```bash
 git --version
@@ -88,7 +80,7 @@ node --version
 npm --version
 ```
 
-## Installation and Setup
+## Installation
 
 ### 1. Clone the repository
 
@@ -98,7 +90,7 @@ Open a terminal and run:
 git clone https://github.com/AbHrA7246/dbms-project.git
 ```
 
-### 2. Enter the frontend directory
+### 2. Open the frontend directory
 
 ```bash
 cd dbms-project/frontend
@@ -110,9 +102,9 @@ cd dbms-project/frontend
 npm ci
 ```
 
-This installs the dependency versions recorded in `package-lock.json`.
+This installs the dependencies recorded in `package-lock.json`. An internet connection is required for cloning and downloading packages.
 
-If installation fails, check your Node.js and npm versions and review the complete error message.
+No backend or database setup is required to run the current frontend.
 
 ## Running the Application
 
@@ -124,27 +116,25 @@ From the `frontend` directory, run:
 npm run dev
 ```
 
-Vite will display a local URL, usually:
+Vite prints a local URL, usually:
 
-```text
-http://localhost:5173/
-```
+**http://localhost:5173/**
 
-Open the URL shown in your terminal in a web browser.
+Open the URL shown in your terminal in a browser. Keep the terminal open while using the application.
 
-Keep the terminal running while you use the website. Stop the development server with `Ctrl + C`.
+To stop the development server, press `Ctrl + C` in that terminal.
 
-If port 5173 is already occupied, Vite may select another port. Use the URL it prints.
+If port 5173 is occupied, Vite may select a different port. Use the URL printed in the terminal.
 
 ### Production build
 
-To verify that the application can be built for deployment:
+To build the frontend:
 
 ```bash
 npm run build
 ```
 
-The generated production files are placed in `frontend/dist/`.
+The production files are generated in `frontend/dist/`.
 
 To preview the production build locally:
 
@@ -152,13 +142,9 @@ To preview the production build locally:
 npm run preview
 ```
 
-Open the preview URL printed by Vite, usually:
+Open the preview URL printed in the terminal, usually `http://localhost:4173/`.
 
-```text
-http://localhost:4173/
-```
-
-The preview command serves the built frontend; it does not deploy the website to the internet.
+The preview command runs the built frontend locally; it does not publish the website online.
 
 ## Application Routes
 
@@ -182,87 +168,77 @@ Protected routes use client-side navigation guards. These are demonstration feat
 
 ## Configuration
 
-No environment variables are required to run the current frontend.
+No environment variables are required to run the current version.
 
-The file `frontend/.env.example` is provided as a template for future configuration. You do not need to create a `.env` file for the current phase.
+The file `frontend/.env.example` is a template for potential future configuration. You do not need to create a `.env` file for the current frontend.
 
-**Never commit real passwords, API keys, database credentials, private keys, or other secrets to GitHub.**
+Never commit real passwords, API keys, database credentials, or other secrets to GitHub.
 
-## Data Persistence and Limitations
+## Data Persistence
 
-The current version uses browser `localStorage` rather than a shared backend database.
+The current application uses browser `localStorage` instead of a shared database.
 
-- User-entered records can persist across navigation and browser refreshes in the same browser.
-- Records are stored locally on the device where the application is used.
-- Data is not automatically synchronized between different computers or browsers.
-- Cloning the repository does not transfer another user's local records.
-- Clearing browser site data or using the application's data-reset control may permanently remove locally stored records.
+- Records can persist across navigation and page refreshes in the same browser.
+- Data remains local to the device and browser where it was entered.
+- Records are not synchronized between different computers or browsers.
+- Cloning the repository does not transfer locally saved records.
+- Clearing browser site data or using the application's data-reset feature may permanently delete saved records.
 
-### Authentication
+## Known Limitations
 
-Sign-in and sign-up are implemented as a frontend demonstration. They do not provide secure, server-side authentication, password hashing, or server-managed sessions.
+| Area | Current status |
+|---|---|
+| Authentication | Client-side prototype; not secure production authentication |
+| Backend API | Not implemented |
+| Database | Oracle integration planned for a future phase |
+| Data sharing | No shared database or cross-device synchronization |
+| Collection facilities | Example project data; not verified operational listings |
+| Recycling progress | Demonstration status, not confirmation of real recycling |
+| Email notifications | Not implemented |
+| File uploads | Not implemented |
 
-Do not reuse real account passwords or enter sensitive personal information.
-
-### Backend and database
-
-The Express backend and Oracle Database integration have not yet been implemented. The current application runs without a backend service.
-
-### Collection facilities and recycling status
-
-Collection-centre details and contact information are representative project data, not verified operational listings. Displayed recycling progress is for demonstration and does not confirm that a real collection or recycling event has occurred.
-
-### Other limitations
-
-- No real collection scheduling or dispatch service.
-- No backend-driven email notifications.
-- No server-side user isolation or authorization.
-- No production database or shared application records.
+The prototype should not be used to store sensitive personal information or real account credentials.
 
 ## Troubleshooting
 
 ### The website does not open
+- Confirm that `npm run dev` is still running.
+- Open the exact URL printed by Vite.
+- Check whether Vite selected a different port.
 
-1. Check that `npm run dev` is still running.
-2. Open the exact URL displayed in the terminal.
-3. If the port has changed, use the newly displayed URL.
-
-### `npm ci` fails
-
-1. Check `node --version` and `npm --version`.
-2. Ensure the computer has an internet connection.
-3. Read the full error output before changing dependencies.
+### Dependency installation fails
+- Check your Node.js and npm versions.
+- Confirm that your internet connection is working.
+- Review the complete error output before changing dependencies.
 
 ### The hero image is missing
-
 Confirm that this file exists in the cloned repository:
 
 ```text
 frontend/public/hero-ewaste-recycling.jpg
 ```
 
-The homepage references the image from the public directory. If the file was recently repaired, make sure the replacement was committed and pushed to GitHub before cloning.
+If the image was repaired locally, ensure the replacement was committed and pushed to GitHub before cloning.
 
 ### The page displays an error
-
-Check the browser's developer console and the terminal running Vite. Review the reported error before modifying application code.
+Check the browser's developer console and the terminal running Vite for the underlying error.
 
 ## Development Workflow
 
-To retrieve the latest committed version:
+To update an existing local clone:
 
 ```bash
 git pull origin main
 ```
 
-After making changes, review them before committing:
+After making changes, inspect them:
 
 ```bash
 git status
 git diff
 ```
 
-Commit and push your changes when ready:
+Commit and push intended changes:
 
 ```bash
 git add .
@@ -270,7 +246,7 @@ git commit -m "Describe your changes"
 git push origin main
 ```
 
-Review the staged files before committing. Do not add secrets, local environment files, dependency folders, or generated build output.
+Review staged files before committing, and do not add secrets, local environment files, dependency folders, or generated build output.
 
 ## Project Status
 
@@ -278,18 +254,18 @@ Review the staged files before committing. Do not add secrets, local environment
 |---|---|
 | React frontend | Implemented |
 | Public informational pages | Implemented |
-| Client-side navigation | Implemented |
+| Client-side routing | Implemented |
 | Prototype authentication | Implemented |
-| Browser-local request persistence | Implemented |
-| Backend API | Planned |
+| Browser-local persistence | Implemented |
+| Backend services | Planned |
 | Oracle Database integration | Planned |
 | Secure production authentication | Planned |
 | Real collection and recycling integration | Planned |
 
-## Image Attribution
+## Project Information
 
-The hero photograph must be credited according to the license of the image actually included in the repository. If the Wikimedia Commons replacement is retained, verify its original file page and license, then add the required author attribution and license link here.
+**Project:** EcoCycle — E-Waste Management & Recycling Optimization System
 
-## Licence
+**Repository:** https://github.com/AbHrA7246/dbms-project
 
-Academic project. All rights reserved by the author(s), except for third-party assets distributed under their respective licenses.
+Developed as an academic project.
