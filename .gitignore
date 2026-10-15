@@ -1,0 +1,90 @@
+# ────────────────────────────────────────────────
+# EcoCycle E-Waste Management — Root .gitignore
+# ────────────────────────────────────────────────
+
+# ── Dependencies ──────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# ── Build output ──────────────────────────────
+dist/
+dist-ssr/
+build/
+out/
+.output/
+
+# ── Environment & secrets ─────────────────────
+# Never commit real credentials. Use .env.example as the template.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ── Logs ──────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ── Vite / Rollup ─────────────────────────────
+*.local
+.vite/
+
+# ── TypeScript ────────────────────────────────
+*.tsbuildinfo
+
+# ── Testing ───────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── OS-generated ──────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── Editor & IDE ──────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.swp
+.project
+.classpath
+.settings/
+
+# ── Temporary & cache ─────────────────────────
+*.tmp
+*.temp
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# ── Backend (future) ──────────────────────────
+# Placeholder section for when the Node/Express backend is added.
+# backend/node_modules/
+# backend/.env
+# backend/logs/
+
+# ── Oracle / Database (deferred) ──────────────
+# wallet/
+# *.ora
+# tnsnames.ora
+# sqlnet.ora

@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: #F8F9FA;
+    color: #1F2421;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Reusable custom components and utilities */
+@layer components {
+  /* Restrained, modern SaaS buttons with subtle hover elevation */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-medium text-white bg-forest hover:bg-forest-900 active:bg-forest-950 transition-all duration-200 shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-forest-500 focus:ring-offset-2;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-md font-medium text-charcoal bg-white hover:bg-gray-50 active:bg-gray-100 border border-gray-300 transition-all duration-200 shadow-sm hover:shadow hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-forest-400 focus:ring-offset-2;
+  }
+
+  .badge-eco {
+    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-forest-50 text-forest border border-forest-100;
+  }
+
+  /* Restrained card hover elevation */
+  .card-hover {
+    @apply transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm hover:border-gray-300;
+  }
+}
+
+/* Subtle, low-opacity background patterns */
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(27, 67, 50, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-circuit-grid {
+  background-image: linear-gradient(to right, rgba(27, 67, 50, 0.03) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(27, 67, 50, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Subtle page entry transition */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: pageFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f3f0;
+}
+::-webkit-scrollbar-thumb {
+  background: #b8decb;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5ba687;
+}
