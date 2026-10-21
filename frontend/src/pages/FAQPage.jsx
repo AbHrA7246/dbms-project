@@ -37,50 +37,50 @@ export default function FAQPage() {
   ];
 
   return (
-    <div className="bg-offwhite text-charcoal page-enter">
+    <div className="bg-offwhite text-charcoal dark:bg-[#0A0A0A] dark:text-[#F5F5F5] page-enter">
 
       {/* 1. Header with subtle dot pattern (White Background) */}
-      <div className="bg-white border-b border-gray-200 bg-dot-pattern py-16 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white dark:bg-[#101010] border-b border-gray-200 dark:border-[#3A3E43] bg-dot-pattern py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl mx-auto text-center space-y-3">
-          <span className="text-xs font-semibold text-forest uppercase tracking-wider">
+          <span className="text-xs font-semibold text-forest dark:text-[#FF7028] uppercase tracking-wider">
             Knowledge Base
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal">
+          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal dark:text-[#F5F5F5]">
             Frequently Asked Questions
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-gray-600 dark:text-[#B8BDC3] leading-relaxed max-w-xl mx-auto">
             Find answers regarding electronic drop-offs, data sanitation, material refining, and platform features.
           </p>
         </div>
       </div>
 
       {/* 2. Accordions (Pale-Sage Background) */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-sage-100/60 border-b border-sage-200/80">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-sage-100/60 dark:bg-[#0A0A0A] border-b border-sage-200/80 dark:border-[#3A3E43]">
         <div className="max-w-3xl mx-auto space-y-3">
           {faqs.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div
                 key={idx}
-                className="bg-white border border-gray-200/90 rounded-xl overflow-hidden shadow-xs transition-all duration-200 card-hover"
+                className="bg-white dark:bg-[#292D31] border border-gray-200/90 dark:border-[#3A3E43] rounded-xl overflow-hidden shadow-xs transition-all duration-200 card-hover"
               >
                 <button
                   type="button"
                   onClick={() => setOpenIdx(isOpen ? -1 : idx)}
-                  className="w-full text-left px-6 py-4.5 flex items-center justify-between gap-4 focus:outline-none hover:bg-gray-50/70 transition-colors"
+                  className="w-full text-left px-6 py-4.5 flex items-center justify-between gap-4 focus:outline-none hover:bg-gray-50/70 dark:hover:bg-[#202326] transition-colors"
                 >
-                  <span className="text-sm sm:text-base font-semibold text-charcoal">
+                  <span className="text-sm sm:text-base font-semibold text-charcoal dark:text-[#F5F5F5]">
                     {faq.q}
                   </span>
                   <ChevronDown
-                    className={`w-4 h-4 text-gray-400 shrink-0 transition-transform duration-200 ${
-                      isOpen ? 'rotate-180 text-forest' : ''
+                    className={`w-4 h-4 text-gray-400 dark:text-[#B8BDC3] shrink-0 transition-transform duration-200 ${
+                      isOpen ? 'rotate-180 text-forest dark:text-[#FF7028]' : ''
                     }`}
                   />
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 leading-relaxed border-t border-gray-100 bg-white">
+                  <div className="px-6 pb-5 pt-1 text-xs sm:text-sm text-gray-600 dark:text-[#B8BDC3] leading-relaxed border-t border-gray-100 dark:border-[#3A3E43] bg-white dark:bg-[#292D31]">
                     {faq.a}
                   </div>
                 )}
@@ -91,15 +91,15 @@ export default function FAQPage() {
       </div>
 
       {/* 3. Help Contact (White Background) */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-200">
-        <div className="max-w-xl mx-auto bg-sage-100/50 border border-sage-200 rounded-2xl p-8 text-center space-y-3 shadow-xs">
-          <div className="w-10 h-10 rounded-xl bg-forest-50 text-forest flex items-center justify-center mx-auto">
-            <HelpCircle className="w-5 h-5 text-forest-700" />
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#101010] border-b border-gray-200 dark:border-[#3A3E43]">
+        <div className="max-w-xl mx-auto bg-sage-100/50 dark:bg-[#292D31] border border-sage-200 dark:border-[#3A3E43] rounded-2xl p-8 text-center space-y-3 shadow-xs">
+          <div className="w-10 h-10 rounded-xl bg-forest-50 dark:bg-[#202326] text-forest dark:text-[#FF7028] flex items-center justify-center mx-auto">
+            <HelpCircle className="w-5 h-5 text-forest-700 dark:text-[#FF7028]" />
           </div>
-          <h3 className="text-base font-bold text-charcoal">
+          <h3 className="text-base font-bold text-charcoal dark:text-[#F5F5F5]">
             Still have questions about e-waste disposal?
           </h3>
-          <p className="text-xs text-gray-600 max-w-sm mx-auto leading-relaxed">
+          <p className="text-xs text-gray-600 dark:text-[#B8BDC3] max-w-sm mx-auto leading-relaxed">
             Our academic project team is glad to provide more information on sustainable disposal protocols and system features.
           </p>
           <div className="pt-2">

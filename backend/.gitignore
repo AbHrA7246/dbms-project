@@ -1,0 +1,30 @@
+# ────────────────────────────────────────────────
+# EcoCycle Backend — .gitignore
+# ────────────────────────────────────────────────
+
+# Dependencies
+node_modules/
+
+# Environment & secrets (NEVER commit credentials)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

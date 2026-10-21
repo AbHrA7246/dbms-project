@@ -58,55 +58,55 @@ export default function HowItWorksPage() {
   ];
 
   return (
-    <div className="bg-offwhite text-charcoal page-enter">
+    <div className="bg-offwhite text-charcoal dark:bg-[#0A0A0A] dark:text-[#F5F5F5] page-enter">
 
-      {/* Header with subtle dot pattern and green tint */}
-      <div className="bg-white border-b border-gray-200 bg-dot-pattern py-16 px-4 sm:px-6 lg:px-8">
+      {/* Header with subtle dot pattern and orange tint */}
+      <div className="bg-white dark:bg-[#101010] border-b border-gray-200 dark:border-[#3A3E43] bg-dot-pattern py-16 px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto space-y-4">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-forest-50 text-forest border border-forest-100 shadow-xs">
-            <Recycle className="w-3.5 h-3.5 text-forest-700" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-forest-50 dark:bg-[#202326] text-forest dark:text-[#FF7028] border border-forest-100 dark:border-[#3A3E43] shadow-xs">
+            <Recycle className="w-3.5 h-3.5 text-forest-700 dark:text-[#FF7028]" />
             <span>Circular Recovery Pipeline</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-charcoal dark:text-[#F5F5F5]">
             The EcoCycle Recycling Workflow
           </h1>
-          <p className="text-base sm:text-lg text-gray-600 leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-[#B8BDC3] leading-relaxed">
             From household declaration to certified material refining, discover how our optimization system ensures zero electronics enter landfills.
           </p>
         </div>
       </div>
 
       {/* Detailed Stages on Pale-Sage Background */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-sage-100/50 border-b border-sage-200/80">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-sage-100/50 dark:bg-[#202326] border-b border-sage-200/80 dark:border-[#3A3E43]">
         <div className="max-w-5xl mx-auto space-y-6">
           {workflowStages.map((stage) => {
             const Icon = stage.icon;
             return (
               <div
                 key={stage.step}
-                className="bg-white border border-gray-200/90 rounded-xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-start shadow-xs card-hover"
+                className="bg-white dark:bg-[#292D31] border border-gray-200/90 dark:border-[#3A3E43] rounded-xl p-6 sm:p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-start shadow-xs card-hover"
               >
                 <div className="md:col-span-4 flex items-center md:items-start gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-forest-50 border border-forest-100 text-forest flex items-center justify-center shrink-0 shadow-xs">
-                    <Icon className="w-6 h-6 text-forest-700" />
+                  <div className="w-12 h-12 rounded-lg bg-forest-50 dark:bg-[#202326] border border-forest-100 dark:border-[#3A3E43] text-forest dark:text-[#FF7028] flex items-center justify-center shrink-0 shadow-xs">
+                    <Icon className="w-6 h-6 text-forest-700 dark:text-[#FF7028]" />
                   </div>
                   <div>
-                    <span className="text-xs font-mono font-bold text-gray-400 block">
+                    <span className="text-xs font-mono font-bold text-gray-400 dark:text-[#B8BDC3] block">
                       STAGE {stage.step}
                     </span>
-                    <h3 className="text-lg font-bold text-charcoal mt-0.5">
+                    <h3 className="text-lg font-bold text-charcoal dark:text-[#F5F5F5] mt-0.5">
                       {stage.title}
                     </h3>
-                    <p className="text-xs text-gray-500 mt-0.5">
+                    <p className="text-xs text-gray-500 dark:text-[#B8BDC3] mt-0.5">
                       {stage.subtitle}
                     </p>
                   </div>
                 </div>
 
-                <div className="md:col-span-8 border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 space-y-2.5">
+                <div className="md:col-span-8 border-t md:border-t-0 md:border-l border-gray-100 dark:border-[#3A3E43] pt-4 md:pt-0 md:pl-6 space-y-2.5">
                   {stage.details.map((detail, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-sm text-gray-700">
-                      <CheckCircle2 className="w-4 h-4 text-forest mt-0.5 shrink-0" />
+                    <div key={idx} className="flex items-start gap-2.5 text-sm text-gray-700 dark:text-[#B8BDC3]">
+                      <CheckCircle2 className="w-4 h-4 text-forest dark:text-[#FF7028] mt-0.5 shrink-0" />
                       <span>{detail}</span>
                     </div>
                   ))}
@@ -118,12 +118,12 @@ export default function HowItWorksPage() {
       </div>
 
       {/* Responsible Standard Card (White Background) */}
-      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-4xl mx-auto bg-sage-100/60 border border-sage-200 rounded-2xl p-8 sm:p-10 text-center space-y-4 shadow-xs">
-          <h2 className="text-2xl font-bold text-charcoal">
+      <div className="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#0A0A0A]">
+        <div className="max-w-4xl mx-auto bg-sage-100/60 dark:bg-[#292D31] border border-sage-200 dark:border-[#3A3E43] rounded-2xl p-8 sm:p-10 text-center space-y-4 shadow-xs">
+          <h2 className="text-2xl font-bold text-charcoal dark:text-[#F5F5F5]">
             Ready to participate in sustainable e-waste disposal?
           </h2>
-          <p className="text-sm text-gray-600 max-w-xl mx-auto">
+          <p className="text-sm text-gray-600 dark:text-[#B8BDC3] max-w-xl mx-auto">
             Create an account or sign in to register your retired equipment, select verified facilities, and track disposal manifests.
           </p>
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">

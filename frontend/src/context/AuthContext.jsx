@@ -7,7 +7,19 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem('ecocycle_current_user');
-      return saved ? JSON.parse(saved) : null;
+      if (!saved) return null;
+      const parsed = JSON.parse(saved);
+      if (!parsed?.email) return null;
+
+      // Authoritative verification against ecocycle_users
+      const users = JSON.parse(localStorage.getItem('ecocycle_users') || '[]');
+      const normalized = parsed.email.trim().toLowerCase();
+      const exists = users.find((u) => u.email && u.email.trim().toLowerCase() === normalized);
+      if (!exists) {
+        localStorage.removeItem('ecocycle_current_user');
+        return null;
+      }
+      return exists;
     } catch {
       return null;
     }
@@ -26,6 +38,42 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
+  // Invalidate stale customer session if user is deleted in another tab or storage updated
+  useEffect(() => {
+    const handleStorageChange = () => {
+      try {
+        const saved = localStorage.getItem('ecocycle_current_user');
+        if (!saved) {
+          setUser(null);
+          return;
+        }
+        const parsed = JSON.parse(saved);
+        if (!parsed?.email) {
+          setUser(null);
+          return;
+        }
+        const users = JSON.parse(localStorage.getItem('ecocycle_users') || '[]');
+        const normalized = parsed.email.trim().toLowerCase();
+        const exists = users.find((u) => u.email && u.email.trim().toLowerCase() === normalized);
+        if (!exists) {
+          localStorage.removeItem('ecocycle_current_user');
+          setUser(null);
+        } else {
+          setUser(exists);
+        }
+      } catch {
+        setUser(null);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('ecocycle_storage_update', handleStorageChange);
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('ecocycle_storage_update', handleStorageChange);
+    };
+  }, []);
+
   // Prototype Sign-in (Simulated client-side auth)
   const login = (email, password) => {
     if (!email || !password) {
@@ -41,20 +89,14 @@ export function AuthProvider({ children }) {
       users = [];
     }
 
-    let existing = users.find((u) => u.email.toLowerCase() === trimmedEmail);
+    const existing = users.find((u) => u.email && u.email.trim().toLowerCase() === trimmedEmail);
 
     if (!existing) {
-      const derivedName = trimmedEmail.split('@')[0];
-      const formattedName = derivedName.charAt(0).toUpperCase() + derivedName.slice(1);
-      existing = {
-        id: 'usr_' + Date.now(),
-        name: formattedName,
-        email: trimmedEmail,
-        userType: 'Individual Resident',
-        createdAt: new Date().toISOString(),
-      };
-      users.push(existing);
-      localStorage.setItem('ecocycle_users', JSON.stringify(users));
+      throw new Error('No account found with this email address. Please verify your spelling or create an account.');
+    }
+
+    if (existing.password && existing.password !== password) {
+      throw new Error('Incorrect password. Please verify your credentials.');
     }
 
     setUser(existing);
@@ -85,6 +127,7 @@ export function AuthProvider({ children }) {
       id: 'usr_' + Date.now(),
       name: name.trim(),
       email: trimmedEmail,
+      password: password,
       userType,
       createdAt: new Date().toISOString(),
     };
@@ -114,6 +157,54 @@ export function AuthProvider({ children }) {
     } catch (e) {
       console.error(e);
     }
+    return updated;
+  };
+
+  // Address Book helpers
+  const getUserAddresses = () => {
+    if (!user) return [];
+    return storageService.getUserAddresses(user.email);
+  };
+
+  const saveAddress = (addrData) => {
+    if (!user) throw new Error('Must be signed in to manage addresses.');
+    return storageService.saveUserAddress(user.email, addrData);
+  };
+
+  const deleteAddress = (addrId) => {
+    if (!user) throw new Error('Must be signed in to manage addresses.');
+    return storageService.deleteUserAddress(user.email, addrId);
+  };
+
+  const setDefaultAddress = (addrId) => {
+    if (!user) throw new Error('Must be signed in to manage addresses.');
+    return storageService.setDefaultAddress(user.email, addrId);
+  };
+
+  const verifyAddress = (addrId, coords) => {
+    if (!user) throw new Error('Must be signed in to manage addresses.');
+    return storageService.verifyUserAddress(user.email, addrId, coords);
+  };
+
+  // User preferences & security
+  const getUserPreferences = () => {
+    if (!user) return { appointmentConfirmations: true, statusUpdates: true, cancellationAlerts: true };
+    return storageService.getUserPreferences(user.email);
+  };
+
+  const saveUserPreferences = (prefs) => {
+    if (!user) return;
+    return storageService.saveUserPreferences(user.email, prefs);
+  };
+
+  const updatePassword = (currentPassword, newPassword) => {
+    if (!user) throw new Error('Must be signed in to change password.');
+    return storageService.updateUserPassword(user.email, currentPassword, newPassword);
+  };
+
+  const clearNonEssentialCache = () => {
+    if (!user) return;
+    return storageService.clearNonEssentialUserCache(user.email);
   };
 
   // Requests persistence via isolated storageService
@@ -124,7 +215,11 @@ export function AuthProvider({ children }) {
 
   const addUserRequest = (requestData) => {
     if (!user) throw new Error('Must be signed in to create requests.');
-    return storageService.createRequest(user.email, requestData);
+    return storageService.createRequest(user.email, {
+      ...requestData,
+      customerName: requestData.customerName || user.name || user.email.split('@')[0],
+      customerEmail: user.email,
+    });
   };
 
   const updateRequestStatus = (requestId, newStatus, note = '') => {
@@ -132,9 +227,73 @@ export function AuthProvider({ children }) {
     return storageService.updateRequestStatus(user.email, requestId, newStatus, note);
   };
 
+  const updatePickupDetails = (requestId, details) => {
+    if (!user) throw new Error('Must be signed in to update pickup details.');
+    return storageService.updateRequestPickupDetails(requestId, user.email, details);
+  };
+
+  const respondToAppointment = (requestId, responseType, note = '') => {
+    if (!user) throw new Error('Must be signed in to respond to appointments.');
+    return storageService.respondToAppointment(requestId, user.email, responseType, note);
+  };
+
+  const cancelUserRequest = (requestId, reason = '') => {
+    if (!user) throw new Error('Must be signed in to cancel requests.');
+    return storageService.cancelRequestByCustomer(requestId, user.email, reason);
+  };
+
   const clearUserRequests = () => {
     if (!user) return;
     storageService.clearRequests(user.email);
+  };
+
+  const hideUserRequest = (requestId) => {
+    if (!user) throw new Error('Must be signed in to hide requests.');
+    return storageService.hideCustomerRequest(user.email, requestId);
+  };
+
+  const hideUserRequests = (requestIds) => {
+    if (!user) throw new Error('Must be signed in to hide requests.');
+    return storageService.hideCustomerRequests(user.email, requestIds);
+  };
+
+  const clearUserHistory = () => {
+    if (!user) return [];
+    return storageService.clearCustomerHistory(user.email);
+  };
+
+  const restoreUserRequest = (requestId) => {
+    if (!user) return;
+    return storageService.restoreCustomerRequest(user.email, requestId);
+  };
+
+  const restoreUserRequests = (requestIds) => {
+    if (!user) return;
+    return storageService.restoreCustomerRequests(user.email, requestIds);
+  };
+
+  const restoreAllUserHistory = () => {
+    if (!user) return;
+    return storageService.restoreAllCustomerHistory(user.email);
+  };
+
+  const getHiddenUserRequests = () => {
+    if (!user) return [];
+    return storageService.getHiddenRequests(user.email);
+  };
+
+  const checkDeletionEligibility = () => {
+    if (!user) {
+      return { canDelete: false, reason: 'Must be signed in to verify account status.', unresolvedRequests: [] };
+    }
+    return storageService.checkCustomerDeletionEligibility(user.email);
+  };
+
+  const deleteAccount = () => {
+    if (!user) throw new Error('Must be signed in to delete account.');
+    const result = storageService.deleteCustomerAccount(user.email);
+    setUser(null);
+    return result;
   };
 
   return (
@@ -146,10 +305,31 @@ export function AuthProvider({ children }) {
         signup,
         logout,
         updateUserProfile,
+        getUserAddresses,
+        saveAddress,
+        deleteAddress,
+        setDefaultAddress,
+        verifyAddress,
+        getUserPreferences,
+        saveUserPreferences,
+        updatePassword,
+        clearNonEssentialCache,
         getUserRequests,
         addUserRequest,
         updateRequestStatus,
+        updatePickupDetails,
+        cancelUserRequest,
+        respondToAppointment,
         clearUserRequests,
+        hideUserRequest,
+        hideUserRequests,
+        clearUserHistory,
+        restoreUserRequest,
+        restoreUserRequests,
+        restoreAllUserHistory,
+        getHiddenUserRequests,
+        checkDeletionEligibility,
+        deleteAccount,
       }}
     >
       {children}

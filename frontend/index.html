@@ -6,8 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="E-Waste Management & Recycling Optimization System - Enabling sustainable circular electronics disposal, verified drop-offs, and ecological tracking." />
     <title>EcoCycle | E-Waste Management &amp; Recycling Optimization System</title>
+    <script>
+      (function() {
+        try {
+          var t = localStorage.getItem('ecocycle_theme') || 'system';
+          var isDark = t === 'dark' || (t === 'system' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) {
+            document.documentElement.classList.add('dark');
+            document.documentElement.style.colorScheme = 'dark';
+          } else {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.style.colorScheme = 'light';
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-offwhite text-charcoal antialiased selection:bg-forest-100 selection:text-forest-900 min-h-screen">
+  <body class="bg-offwhite text-charcoal dark:bg-[#0A0A0A] dark:text-[#F5F5F5] antialiased selection:bg-[#FF7028]/20 selection:text-[#FF7028] min-h-screen transition-colors duration-150">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

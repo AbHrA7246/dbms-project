@@ -77,11 +77,12 @@ Desktop.ini
 .eslintcache
 .stylelintcache
 
-# ── Backend (future) ──────────────────────────
-# Placeholder section for when the Node/Express backend is added.
-# backend/node_modules/
-# backend/.env
-# backend/logs/
+# ── Backend ───────────────────────────────────
+backend/node_modules/
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/logs/
 
 # ── Oracle / Database (deferred) ──────────────
 # wallet/

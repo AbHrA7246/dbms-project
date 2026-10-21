@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch --watch-path=src --watch-path=.env src/server.js",
+    "test": "node --test tests/",
+    "setup:db": "bash scripts/resolve-mysql-auth.sh",
+    "migrate": "node src/config/migrate.js apply",
+    "migrate:status": "node src/config/migrate.js status",
+    "migrate:dry-run": "node src/config/migrate.js dry-run"
+  },
+  "keywords": [
+    "ecocycle",
+    "ewaste",
+    "express",
+    "mysql"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "EcoCycle E-Waste Management Backend",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.6"
+  }
+}

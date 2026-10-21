@@ -85,16 +85,18 @@ ewaste-management/
         ├── App.jsx              # Router tree (public + protected routes)
         ├── index.css            # Global styles, Tailwind directives, custom classes
         ├── components/
-        │   ├── Navbar.jsx               # Adaptive nav (public ↔ authenticated)
+        │   ├── Navbar.jsx               # Adaptive customer nav
+        │   ├── CentreNavbar.jsx         # Facility operations header
         │   ├── Footer.jsx               # Site footer
-        │   ├── ProtectedRoute.jsx       # Auth guard — redirects to /login
+        │   ├── ProtectedRoute.jsx       # Customer auth guard — redirects to /login
+        │   ├── CentreProtectedRoute.jsx # Centre auth guard — redirects to /centre/login
         │   ├── FeatureCard.jsx          # Reusable feature card
-        │   ├── MetricCard.jsx           # Dashboard stat card
-        │   └── TrackingSimulationCard.jsx
+        │   └── MetricCard.jsx           # Dashboard stat card
         ├── context/
-        │   └── AuthContext.jsx          # Auth state + request API bridge
+        │   ├── AuthContext.jsx          # Customer auth state + request API bridge
+        │   └── CentreAuthContext.jsx    # Facility session and auth state
         ├── services/
-        │   └── storageService.js        # Isolated localStorage persistence layer
+        │   └── storageService.js        # Zero-seed localStorage persistence layer
         └── pages/
             ├── LandingPage.jsx
             ├── HowItWorksPage.jsx
@@ -108,7 +110,15 @@ ewaste-management/
             ├── RegisterPage.jsx
             ├── CentersPage.jsx
             ├── RequestsPage.jsx
-            └── AccountPage.jsx
+            ├── AccountPage.jsx
+            └── centre/
+                ├── CentreRegisterPage.jsx     # Facility partner onboarding
+                ├── CentreLoginPage.jsx        # Facility sign-in
+                ├── CentreDashboardPage.jsx    # Intake review & metrics
+                ├── CentreRequestsPage.jsx     # Request inspection & processing
+                ├── CentreAppointmentsPage.jsx # Scheduling & pickups
+                ├── CentreCapacityPage.jsx     # Mass & unit throughput quotas
+                └── CentreProfilePage.jsx      # Accreditation & streams
 ```
 
 ---
@@ -201,7 +211,21 @@ The preview server starts at **http://localhost:4173**.
 | `/requests` | Collection request tracking |
 | `/account` | Account settings |
 
-Direct access to a private route while signed out redirects to `/login`. After signing in, the user is returned to the originally requested page.
+Direct access to a private customer route while signed out redirects to `/login`. After signing in, the user is returned to the originally requested page.
+
+### Recycling Centre Portal Routes
+
+| Path | Page | Access |
+|---|---|---|
+| `/centre/register` | Facility Partner Onboarding | Public |
+| `/centre/login` | Facility Staff Sign-In | Public |
+| `/centre/dashboard` | Intake queue & workload metrics | Facility authenticated (`CentreProtectedRoute`) |
+| `/centre/requests` | Hardware inspection & status transitions | Facility authenticated |
+| `/centre/appointments` | Pickup/drop-off scheduling calendar | Facility authenticated |
+| `/centre/capacity` | Weekly throughput & unit quotas | Facility authenticated |
+| `/centre/profile` | Facility accreditation & public directory profile | Facility authenticated |
+
+Direct access to private facility routes while signed out redirects to `/centre/login`. Navigation links are dynamically scoped between customer and facility portals.
 
 ---
 
@@ -252,14 +276,22 @@ The persistence layer is isolated in [`frontend/src/services/storageService.js`]
 
 | Area | Current state |
 |---|---|
-| **Authentication** | Prototype only. Email + any password signs in (or auto-creates an account). No password hashing, no server-side session, no token validation. Suitable for demonstration; not for production. |
-| **Multi-user isolation** | Not enforced. Any person with access to the same browser can sign in as any email address and read that email's locally stored records. |
+| **Authentication** | Client-side prototype (localStorage-backed). Customer login validates against existing registered accounts only; new accounts require explicit registration. Passwords verified locally. Suitable for demonstration; not for production security. |
+| **Multi-user isolation** | Not enforced on shared client devices. Any person with access to the same browser profile can sign in to registered accounts. |
 | **Data durability** | localStorage can be cleared by the browser at any time (private/incognito mode, storage quota pressure). |
 | **Backend API** | Not implemented. No Express server exists. All API references in comments describe the future Oracle-backed architecture. |
 | **Oracle Database** | Integration is deferred. The `storageService.js` module is the planned replacement point. |
 | **File uploads** | Not supported. |
 | **Email notifications** | Not supported. |
 | **Real recycling operations** | This is an academic project prototype. Collection centre details, certifications, and phone numbers are representative examples and do not represent real operational facilities. |
+
+---
+
+## Asset Attribution
+
+| Asset | Description | Source / Creator | Licence | Source URL |
+|---|---|---|---|---|
+| **Homepage Hero Photograph** | Real printed circuit boards sorted and prepared for material recovery and electronics recycling | Crista Castellanos | [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/) | [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Board_mother_tarjeta_madre_crista_castellanos.jpg) |
 
 ---
 
