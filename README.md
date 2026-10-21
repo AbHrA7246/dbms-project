@@ -1,90 +1,62 @@
 # EcoCycle — E-Waste Management & Recycling Optimization System
 
-A sustainability-technology web application that enables individuals, students, and organisations to register surplus electronics, locate certified collection centres, schedule collection requests, and track each item through its verified recycling lifecycle.
+EcoCycle is a web-based e-waste management platform developed as a college project. It provides an interface for registering unwanted electronic devices, exploring collection facilities, submitting collection requests, and tracking recycling progress.
 
-Built as a college project with a polished, modern SaaS design in forest green, off-white, and charcoal.
-
----
-
-## Table of Contents
-
-- [Features](#features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Running the Application](#running-the-application)
-- [Available Routes](#available-routes)
-- [Configuration](#configuration)
-- [Data Persistence — Important Notes](#data-persistence--important-notes)
-- [Known Limitations](#known-limitations)
-- [Security Audit Notes](#security-audit-notes)
-
----
+The project aims to explore how digital platforms can support responsible e-waste disposal and more efficient recycling workflows.
 
 ## Features
 
-### Public Pages (no login required)
-- **Landing page** — hero section, how-it-works overview, accepted e-waste categories, and a responsible-recycling explainer
-- **How It Works** — detailed 4-stage technical recycling workflow
-- **About** — EcoCycle mission and objectives
-- **Accepted Waste** — full category checklist with handling procedures
-- **FAQ** — frequently asked questions
-- **Contact** — contact information page
+### Public pages
+- **Home:** Project introduction and responsible recycling overview.
+- **How It Works:** Explanation of the proposed recycling workflow.
+- **About:** Project mission and objectives.
+- **Accepted Waste:** Information about accepted electronic waste categories.
+- **FAQ:** Frequently asked questions.
+- **Contact:** Contact information.
 
-### Authenticated Application (login required)
-- **Sign up / Sign in** — client-side prototype authentication (localStorage-backed)
-- **Personal Dashboard** — live metrics derived strictly from submitted records: registered items, active dispatches, certified disposals, and total weight
-- **E-Waste Registration Form** — validated form to declare electronics (brand, model, condition, quantity, weight), select a collection channel (drop-off or pickup), and assign a certified facility. Generates a unique tracking ID (`EW-XXXXXX`) only after a successful write
-- **Collection Centres Directory** — searchable, filterable listing of certified facilities with address, hours, phone, and accepted streams
-- **Request Tracking** — live list of all submitted requests, a 4-step visual progress bar (Submitted → Scheduled → In Transit → Recycled), chain-of-custody log, and a status-advancement control for demonstration
-- **Account Settings** — profile management and a data-reset control
+### Application pages
+- **Sign Up / Sign In:** Client-side demonstration authentication.
+- **Dashboard:** Overview of registered items and collection requests.
+- **E-Waste Registration:** Form for entering electronic-item details and collection preferences.
+- **Collection Centres:** Directory of example collection facilities.
+- **Request Tracking:** View submitted requests and their displayed progress.
+- **Account Settings:** Manage account information and clear locally saved data.
 
-### Design System
-- Forest green (`#1B4332`), off-white (`#F8F9FA`), charcoal (`#1F2421`), pale sage (`#EBF2ED`)
-- Fully responsive (mobile, tablet, desktop)
-- Subtle page-entry transitions, restrained hover effects, custom scrollbar
-
----
+> **Current status:** EcoCycle is a frontend prototype. Authentication and request management are not connected to a production backend or a real recycling network.
 
 ## Technology Stack
 
-| Layer | Technology | Version |
-|---|---|---|
-| Frontend framework | React | 18.3.x |
-| Build tool | Vite | 5.4.x |
-| Routing | React Router DOM | 7.x |
-| Styling | Tailwind CSS | 3.4.x |
-| Icons | Lucide React | 0.468.x |
-| CSS post-processing | PostCSS + Autoprefixer | 8.x / 10.x |
-| Persistence (Phase 1) | Browser `localStorage` | — |
-| Backend | **Not yet implemented** | — |
-| Database | **Oracle DB — deferred** | — |
+| Technology | Purpose |
+|---|---|
+| React 18 | User interface |
+| Vite 5 | Development server and build tool |
+| React Router DOM | Client-side routing |
+| Tailwind CSS 3 | Styling and responsive layouts |
+| Lucide React | Icons |
+| PostCSS and Autoprefixer | CSS processing |
+| Browser `localStorage` | Local data persistence |
+| Node.js and npm | Development environment |
 
----
+**Planned:** Node.js/Express backend services and Oracle Database integration. Neither is implemented in the current version.
 
 ## Project Structure
 
-```
-ewaste-management/
-├── .gitignore                   # Root ignore rules
-├── README.md                    # This file
-└── frontend/                    # React + Vite SPA
-    ├── .env.example             # Environment variable template (no secrets)
-    ├── .gitignore               # Frontend-specific ignore rules
-    ├── index.html               # HTML entry point
-    ├── package.json             # Dependencies and scripts
-    ├── package-lock.json        # Locked dependency tree (npm v9+, lockfileVersion 3)
-    ├── postcss.config.js        # PostCSS (Tailwind + Autoprefixer)
-    ├── tailwind.config.js       # Tailwind design tokens (colors, shadows, fonts)
-    ├── vite.config.js           # Vite + React plugin, dev server port 5173
+```text
+dbms-project/
+├── .gitignore
+├── README.md
+└── frontend/
+    ├── .env.example
+    ├── .gitignore
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
     ├── public/
-    │   └── hero-ewaste-recycling.jpg   # Hero photograph
+    │   └── hero-ewaste-recycling.jpg
     └── src/
-        ├── main.jsx             # React DOM entry
-        ├── App.jsx              # Router tree (public + protected routes)
-        ├── index.css            # Global styles, Tailwind directives, custom classes
-        ├── components/
+        ├── App.jsx
+        ├── main.jsx
+        ├── index.css
         │   ├── Navbar.jsx               # Adaptive customer nav
         │   ├── CentreNavbar.jsx         # Facility operations header
         │   ├── Footer.jsx               # Site footer
@@ -121,95 +93,107 @@ ewaste-management/
                 └── CentreProfilePage.jsx      # Accreditation & streams
 ```
 
----
-
 ## Prerequisites
 
-| Tool | Minimum version | Notes |
-|---|---|---|
-| Node.js | 18.x LTS | 20.x LTS recommended |
-| npm | 9.x | Included with Node 18+ |
-| Git | any | For cloning |
+Install the following on your computer:
 
-Verify your versions:
+- **Git** — to download the repository.
+- **Node.js 20 LTS recommended** — Node.js 18 or later.
+- **npm** — included with Node.js.
+
+Verify the installations:
 
 ```bash
+git --version
 node --version
 npm --version
 ```
 
----
-
 ## Installation
 
-Clone the repository and install frontend dependencies:
+### 1. Clone the repository
+
+Open a terminal and run:
 
 ```bash
-git clone https://github.com/<your-username>/ewaste-management.git
-cd ewaste-management/frontend
-npm install
+git clone https://github.com/AbHrA7246/dbms-project.git
 ```
 
-No backend setup is required for Phase 1.
+### 2. Open the frontend directory
 
----
+```bash
+cd dbms-project/frontend
+```
+
+### 3. Install dependencies
+
+```bash
+npm ci
+```
+
+This installs the dependencies recorded in `package-lock.json`. An internet connection is required for cloning and downloading packages.
+
+No backend or database setup is required to run the current frontend.
 
 ## Running the Application
 
-### Development server
+### Development mode
+
+From the `frontend` directory, run:
 
 ```bash
-cd frontend
 npm run dev
 ```
 
-Open **http://localhost:5173** in your browser.
+Vite prints a local URL, usually:
 
-The development server supports Hot Module Replacement (HMR). Changes to any source file reflect instantly without a manual refresh.
+**http://localhost:5173/**
+
+Open the URL shown in your terminal in a browser. Keep the terminal open while using the application.
+
+To stop the development server, press `Ctrl + C` in that terminal.
+
+If port 5173 is occupied, Vite may select a different port. Use the URL printed in the terminal.
 
 ### Production build
 
+To build the frontend:
+
 ```bash
-cd frontend
 npm run build
 ```
 
-Output is written to `frontend/dist/`. Verify the build locally with:
+The production files are generated in `frontend/dist/`.
+
+To preview the production build locally:
 
 ```bash
 npm run preview
 ```
 
-The preview server starts at **http://localhost:4173**.
+Open the preview URL printed in the terminal, usually `http://localhost:4173/`.
 
-> **No backend service is required.** The application runs entirely in the browser for Phase 1.
+The preview command runs the built frontend locally; it does not publish the website online.
 
----
+## Application Routes
 
-## Available Routes
+### Customer Portal Routes
 
-### Public routes — accessible without signing in
-
-| Path | Page |
-|---|---|
-| `/` | Landing page |
-| `/how-it-works` | Recycling workflow |
-| `/about` | About EcoCycle |
-| `/accepted-waste` | Accepted e-waste categories |
-| `/faq` | Frequently asked questions |
-| `/contact` | Contact information |
-| `/login` | Sign-in |
-| `/signup` | Account registration |
-
-### Private routes — require authentication
-
-| Path | Page |
-|---|---|
-| `/dashboard` | Personal dashboard |
-| `/register` | Register e-waste / create collection request |
-| `/centers` | Collection centre directory |
-| `/requests` | Collection request tracking |
-| `/account` | Account settings |
+| Route | Page | Access |
+|---|---|---|
+| `/` | Home | Public |
+| `/how-it-works` | How It Works | Public |
+| `/about` | About | Public |
+| `/accepted-waste` | Accepted Waste | Public |
+| `/faq` | FAQ | Public |
+| `/contact` | Contact | Public |
+| `/login` | Sign In | Public |
+| `/signup` | Sign Up | Public |
+| `/dashboard` | Dashboard | Protected (`ProtectedRoute`) |
+| `/register` | E-Waste Registration | Protected (`ProtectedRoute`) |
+| `/centers` | Collection Centres | Protected (`ProtectedRoute`) |
+| `/requests` | Request Tracking | Protected (`ProtectedRoute`) |
+| `/account` | Account Settings | Protected (`ProtectedRoute`) |
 
 Direct access to a private customer route while signed out redirects to `/login`. After signing in, the user is returned to the originally requested page.
 
@@ -231,61 +215,38 @@ Direct access to private facility routes while signed out redirects to `/centre/
 
 ## Configuration
 
-### Environment variables
+No environment variables are required to run the current version.
 
-No environment variables are required for Phase 1.
+The file `frontend/.env.example` is a template for potential future configuration. You do not need to create a `.env` file for the current frontend.
 
-Copy the template for future use:
+Never commit real passwords, API keys, database credentials, or other secrets to GitHub.
 
-```bash
-cp frontend/.env.example frontend/.env
-```
+## Data Persistence
 
-See `frontend/.env.example` for a full list of variables that will be needed when the backend is introduced (Oracle DB connection, JWT secret, API base URL).
+The current application uses browser `localStorage` instead of a shared database.
 
-### Tailwind design tokens
-
-Custom colours, shadows, and fonts are defined in [`frontend/tailwind.config.js`](./frontend/tailwind.config.js):
-
-```js
-colors: {
-  forest:   { DEFAULT: '#1B4332', ... },   // Primary brand green
-  offwhite: { DEFAULT: '#F8F9FA', ... },   // Page background
-  charcoal: { DEFAULT: '#1F2421', ... },   // Primary text
-  sage:     { DEFAULT: '#EBF2ED', ... },   // Section backgrounds
-}
-```
-
----
-
-## Data Persistence — Important Notes
-
-> **localStorage is a temporary, browser-local persistence layer for Phase 1 only.**
-
-- All e-waste registrations and collection requests are saved in the **browser's localStorage** under a key namespaced to the signed-in user's email address.
-- Data **persists across page navigation and browser refreshes** within the same browser on the same device.
-- Data is **entirely local** to the individual browser instance. It is **not uploaded to GitHub** and is **not shared between different browsers or devices**.
-- There is **no shared backend database** in Phase 1. Each person who runs this application from source sees only their own locally entered records.
-- Clearing browser site data or calling "Clear My Saved Requests" in Account Settings will permanently erase local records.
-
-The persistence layer is isolated in [`frontend/src/services/storageService.js`](./frontend/src/services/storageService.js). When Oracle Database integration resumes, this single file will be replaced with `fetch('/api/requests')` calls. No UI components need to change.
-
----
+- Records can persist across navigation and page refreshes in the same browser.
+- Data remains local to the device and browser where it was entered.
+- Records are not synchronized between different computers or browsers.
+- Cloning the repository does not transfer locally saved records.
+- Clearing browser site data or using the application's data-reset feature may permanently delete saved records.
 
 ## Known Limitations
 
-| Area | Current state |
+| Area | Current status |
 |---|---|
 | **Authentication** | Client-side prototype (localStorage-backed). Customer login validates against existing registered accounts only; new accounts require explicit registration. Passwords verified locally. Suitable for demonstration; not for production security. |
 | **Multi-user isolation** | Not enforced on shared client devices. Any person with access to the same browser profile can sign in to registered accounts. |
 | **Data durability** | localStorage can be cleared by the browser at any time (private/incognito mode, storage quota pressure). |
-| **Backend API** | Not implemented. No Express server exists. All API references in comments describe the future Oracle-backed architecture. |
-| **Oracle Database** | Integration is deferred. The `storageService.js` module is the planned replacement point. |
-| **File uploads** | Not supported. |
-| **Email notifications** | Not supported. |
-| **Real recycling operations** | This is an academic project prototype. Collection centre details, certifications, and phone numbers are representative examples and do not represent real operational facilities. |
+| **Backend API** | In active development (Milestones 1–4 complete with MySQL persistence, JWT authentication, facility operations, and collection request lifecycle). |
+| **Database** | MySQL database schema applied and connected for backend services; frontend localStorage persistence remains active in prototype mode. |
+| **Data sharing** | Demonstration mode uses browser localStorage; backend API operates on MySQL. |
+| **Collection facilities** | Example project data; not verified operational listings. |
+| **Recycling progress** | Academic workflow and status transitions. |
+| **Email notifications** | Not implemented. |
+| **File uploads** | Not implemented. |
 
----
+The prototype should not be used to store sensitive personal information or real account credentials.
 
 ## Asset Attribution
 
@@ -310,7 +271,73 @@ The following checks were performed before publication:
 
 ---
 
-## Licence
+## Troubleshooting
 
-Academic project. All rights reserved by the author(s).
+### The website does not open
+- Confirm that `npm run dev` is still running.
+- Open the exact URL printed by Vite.
+- Check whether Vite selected a different port.
 
+### Dependency installation fails
+- Check your Node.js and npm versions.
+- Confirm that your internet connection is working.
+- Review the complete error output before changing dependencies.
+
+### The hero image is missing
+Confirm that this file exists in the cloned repository:
+
+```text
+frontend/public/hero-ewaste-recycling.jpg
+```
+
+If the image was repaired locally, ensure the replacement was committed and pushed to GitHub before cloning.
+
+### The page displays an error
+Check the browser's developer console and the terminal running Vite for the underlying error.
+
+## Development Workflow
+
+To update an existing local clone:
+
+```bash
+git pull origin main
+```
+
+After making changes, inspect them:
+
+```bash
+git status
+git diff
+```
+
+Commit and push intended changes:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push origin main
+```
+
+Review staged files before committing, and do not add secrets, local environment files, dependency folders, or generated build output.
+
+## Project Status
+
+| Component | Status |
+|---|---|
+| React frontend | Implemented |
+| Public informational pages | Implemented |
+| Client-side routing | Implemented |
+| Prototype authentication | Implemented |
+| Browser-local persistence | Implemented |
+| Backend services | Planned |
+| Oracle Database integration | Planned |
+| Secure production authentication | Planned |
+| Real collection and recycling integration | Planned |
+
+## Project Information
+
+**Project:** EcoCycle — E-Waste Management & Recycling Optimization System
+
+**Repository:** https://github.com/AbHrA7246/dbms-project
+
+Developed as an academic project.
