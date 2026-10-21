@@ -10,10 +10,22 @@ export function errorHandler(err, _req, res, _next) {
   console.error('[SERVER ERROR]', err.message || err);
 
   const statusCode = err.status || err.statusCode || 500;
+  const defaultErrorNames = {
+    400: 'Bad Request',
+    401: 'Unauthorized',
+    403: 'Forbidden',
+    404: 'Not Found',
+    409: 'Conflict',
+    422: 'Unprocessable Entity',
+    500: 'Internal Server Error',
+  };
+  const errorTitle = err.name && err.name !== 'Error'
+    ? err.name
+    : (defaultErrorNames[statusCode] || 'Error');
 
   res.status(statusCode).json({
-    error: statusCode === 500 ? 'Internal Server Error' : (err.name || 'Error'),
-    message: isDevelopment ? err.message : 'An unexpected error occurred.',
+    error: errorTitle,
+    message: (isDevelopment || statusCode < 500) ? err.message : 'An unexpected error occurred.',
     timestamp: new Date().toISOString(),
     ...(isDevelopment && err.stack ? { stack: err.stack } : {}),
   });

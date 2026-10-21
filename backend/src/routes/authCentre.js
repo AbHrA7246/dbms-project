@@ -116,8 +116,12 @@ router.post('/register', async (req, res, next) => {
           dropoffAvailable: data.dropoffAvailable,
           openingTime: data.openingTime,
           closingTime: data.closingTime,
-          operatingDaysSummary: data.operatingDaysSummary || data.operatingDays,
-          operatingHoursSummary: data.operatingHoursSummary || data.hours,
+          operatingDaysSummary: typeof data.operatingDaysSummary === 'string'
+            ? data.operatingDaysSummary
+            : (Array.isArray(data.operatingDays) ? data.operatingDays.join(', ') : (data.operatingDays || 'Monday to Friday')),
+          operatingHoursSummary: typeof data.operatingHoursSummary === 'string'
+            ? data.operatingHoursSummary
+            : (data.hours || '09:00 AM – 05:00 PM'),
           latitude,
           longitude,
           staffName: data.staffName,

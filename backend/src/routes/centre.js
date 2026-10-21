@@ -4,6 +4,7 @@ import centreRepository, {
   VALID_DAYS,
   calculateCapacityLimits,
 } from '../repositories/centreRepository.js';
+import requestService from '../services/requestService.js';
 
 const router = Router();
 
@@ -271,6 +272,90 @@ router.put('/profile', async (req, res, next) => {
       message: 'Facility profile updated successfully.',
       centre: updated,
       capacity,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Facility Request Management Endpoints
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * GET /api/centre/requests
+ * Lists collection requests assigned to the authenticated facility.
+ * Supports filters: status, category, method, page, limit.
+ */
+router.get('/requests', async (req, res, next) => {
+  try {
+    const { status, category, method, page, limit } = req.query || {};
+    const result = await requestService.getCentreRequests(req.centre, {
+      status,
+      category,
+      method,
+      page,
+      limit,
+    });
+
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * GET /api/centre/requests/:id
+ * Retrieves a single assigned request by ID, verifying facility assignment.
+ */
+router.get('/requests/:id', async (req, res, next) => {
+  try {
+    const request = await requestService.getCentreRequestById(req.centre, req.params.id);
+    res.status(200).json({ request });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * GET /api/centre/requests/:id/history
+ * Retrieves immutable audit history events for an assigned facility request.
+ */
+router.get('/requests/:id/history', async (req, res, next) => {
+  try {
+    const history = await requestService.getCentreRequestHistory(req.centre, req.params.id);
+    res.status(200).json({ history });
+  } catch (error) {
+    next(error);
+  }
+});
+
+/**
+ * PATCH /api/centre/requests/:id/status
+ * Updates assigned request status through an authorized lifecycle state transition.
+ * Records transition note, rejection reasons, or received weight in history and request row.
+ */
+router.patch('/requests/:id/status', async (req, res, next) => {
+  try {
+    const { status, reason, note, receivedWeightKg } = req.body || {};
+
+    if (!status || typeof status !== 'string' || !status.trim()) {
+      return res.status(400).json({
+        error: 'Bad Request',
+        message: 'Target status is required.',
+      });
+    }
+
+    const updatedRequest = await requestService.transitionStatusByCentre(
+      req.centre,
+      req.params.id,
+      status.trim(),
+      { reason, note, receivedWeightKg }
+    );
+
+    res.status(200).json({
+      message: 'Request status updated successfully.',
+      request: updatedRequest,
     });
   } catch (error) {
     next(error);

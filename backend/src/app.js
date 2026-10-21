@@ -7,6 +7,7 @@ import authCentreRouter from './routes/authCentre.js';
 import customerRouter from './routes/customer.js';
 import centresRouter from './routes/centres.js';
 import centreRouter from './routes/centre.js';
+import requestsRouter from './routes/requests.js';
 import { notFoundHandler } from './middleware/notFound.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
@@ -54,6 +55,7 @@ app.get('/api', (_req, res) => {
       customer: '/api/customer',
       centres: '/api/centres',
       centre: '/api/centre',
+      requests: '/api/requests',
     },
     timestamp: new Date().toISOString(),
   });
@@ -67,6 +69,7 @@ app.use('/api/auth/centre', authCentreRouter);
 app.use('/api/customer', customerRouter);
 app.use('/api/centres', centresRouter);
 app.use('/api/centre', centreRouter);
+app.use('/api/requests', requestsRouter);
 
 // 404 handler for undefined routes
 app.use(notFoundHandler);
